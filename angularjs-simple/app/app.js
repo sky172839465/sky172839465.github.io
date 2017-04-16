@@ -7,6 +7,8 @@ ctrl.$inject = ['dataservice'];
 function ctrl(dataservice) {
     var vm = this;
     vm.test = 'Simple';
-    vm.list = dataservice.getData();
-	console.table(vm.list);
+    var result = dataservice.getData();
+	vm.list = result;
+	console.table(result);
+	
 }
