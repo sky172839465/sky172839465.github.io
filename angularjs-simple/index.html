@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="assets/angular.min.js"></script>
+    <script src="compile/module.bundle.js"></script>
+	<script src="compile/bundle.js"></script>
+</head>
+<body ng-controller="ctrl as vm">
+    <h1 ng-bind="vm.test"></h1>
+    
+    <div ng-repeat="item in vm.list">
+      <div ng-bind="item.title"></div>
+      <div ng-bind="item.name"></div>
+      <br>
+    </div>
+
+    <custom-element></custom-element>
+</body>
+</html>

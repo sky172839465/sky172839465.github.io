@@ -1,0 +1,8 @@
+{
+"version":3,
+"file":"bundle.js",
+"lineCount":17,
+"mappings":"AAAAA,OAAAC,OAAA,CACY,KADZ,CAAAC,WAAA,CAEgB,MAFhB,EAEwBC,IAFxB,CAAA;AAIAA,IAAAC,QAAA,GAAe,CAAC,aAAD,CAAf;AAEAD,QAASA,KAAI,CAACE,CAAD,CAAc;AACdC,MACTC,KAAA,GAAU,QAAV;AADSD,MAETE,KAAA,GAAUH,CAAAI,QAAA,EAAV;AAHuB;A,CCN3BT,OAAAC,OAAA,CACY,KADZ,CAAAS,QAAA,CAEa,aAFb,EAE4BL,WAF5B,CAAA;AAIAA,QAASA,YAAW,EAAG;AAKnB,SAJcM,CACZF,QAKFA,QAAgB,EAAG;AAcjB,WAbWG,CACT,CACEC,MAAO,KADT,EAEEC,KAAM,KAFR,CADSF,EAIP,CACAC,MAAO,KADP,EAEAC,KAAM,KAFN,CAJOF,EAOP,CACAC,MAAO,KADP,EAEAC,KAAM,KAFN,CAPOF,CAaX;AAdiB,GANLD,CAId;AALmB;A,CCJvBX,OAAAC,OAAA,CACY,MADZ,EACoB,EADpB,CAAAc,UAAA,CAEe,eAFf,EAEgCC,aAFhC,CAAA;AAIAA,QAASA,cAAa,EAAE;AAKpB,SAJgBD,CACZE,SAAU,+BADEF,EAEZG,SAAU,GAFEH,CAIhB;AALoB;;",
+"sources":["../app/app.js","../app/app.servcie.js","../app/component/comp.js"],
+"names":["angular","module","controller","ctrl","$inject","dataservice","vm","test","list","getData","factory","service","data","title","name","directive","customElement","template","restrict"]
+}

@@ -1,0 +1,8 @@
+{
+"version":3,
+"file":"module.bundle.js",
+"lineCount":3,
+"mappings":"AAAAA,OAAAC,OAAA,CACW,KADX,EACkB,CAAC,MAAD,CADlB,CAAA;ACAAD,OAAAC,OAAA,CACY,MADZ,EACoB,EADpB,CAAA;;",
+"sources":["../app/app.module.js","../app/component/comp.module.js"],
+"names":["angular","module"]
+}
