@@ -1,0 +1,3 @@
+java -jar compiler.jar --js ..\app\**.module.js ..\app\component\**.module.js --js_output_file module.bundle.js --create_source_map module.bundle.js.map --output_wrapper "%%output%%//# sourceMappingURL=module.bundle.js.map" --formatting PRETTY_PRINT
+
+java -jar compiler.jar --js_output_file bundle.js --create_source_map bundle.js.map --output_wrapper "%%output%%//# sourceMappingURL=bundle.js.map" ..\app\** !..\app\**.module.js !..\app\**\**.module.js --formatting PRETTY_PRINT

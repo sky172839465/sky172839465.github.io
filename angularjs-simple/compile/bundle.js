@@ -3,6 +3,7 @@ ctrl.$inject = ["dataservice"];
 function ctrl(a) {
   this.test = "Simple";
   this.list = a.getData();
+  console.table(this.list);
 }
 ;angular.module("app").factory("dataservice", dataservice);
 function dataservice() {

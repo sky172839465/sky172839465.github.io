@@ -8,4 +8,5 @@ function ctrl(dataservice) {
     var vm = this;
     vm.test = 'Simple';
     vm.list = dataservice.getData();
+	console.table(vm.list);
 }
