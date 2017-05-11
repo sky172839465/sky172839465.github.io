@@ -1,0 +1,95 @@
+<link rel="import" href="../paper-card/paper-card.html">
+<link rel="import" href="card-icon.html">
+<dom-module id="googledrive-card">
+	<style is="custom-style">
+	paper-card {
+		width: 90%;
+		margin: 0 5% 5% 5%; 
+	}
+	.itemTitle {
+		color: var(--paper-grey-600); 
+		margin: 1% 0;
+		font-size: 90%;
+	}	
+	.card-action-btn-area {
+		width: 100%; 
+	}
+	a {
+		text-decoration: none; 
+		color: var(--paper-green-700);
+	}
+	</style>
+	<template>
+		<template is="dom-repeat" id="repeat" as="file">
+			<paper-card image="{{_adjustContent(file.fileImage, 'img')}}" 
+						elevation="1" 
+						animated-shadow="true">
+				<div class="card-content">
+					<div class="itemTitle">
+						File Name
+					</div>
+					<div>
+						{{_adjustContent(file.fileName, 'name')}}
+					</div>
+					<div class="itemTitle">
+						Last Update Time
+					</div>
+					<div>
+						{{_adjustContent(file.fileModifiedTime, 'update')}}
+					</div>								
+				</div>
+				<div class="card-actions">
+					<div class="card-action-btn-area" align="center">
+						<a href="{{file.fileWebView}}" target="block" tabindex="-1">
+							<iron-icon icon="own:remove-red-eye"></iron-icon>
+							<paper-button noink>WEB View</paper-button>
+						</a>									
+
+						<a href="{{file.fileDownload}}" target="block" tabindex="-1">
+							<iron-icon icon="own:file-download"></iron-icon>
+							<paper-button noink>Download</paper-button>
+						</a>									
+					</div>
+				</div>
+			</paper-card>	
+		</template>		
+	</template>
+	<script>
+		Polymer({
+			is: 'googledrive-card',
+			properties: {
+				// save all file data [url, img, modifyTime...etc], design layout by this properties
+				fileInfoList: {
+					type: JSON,
+					notify: true					
+				}				
+			},
+			_adjustContent: function(content, type){
+				var newContent = "";
+				switch(type){
+					case 'img':
+						if(content == ""){
+							newContent = "https://www.polymer-project.org/images/logos/polymerosaurus.png";		
+						}else{
+							var width = "700";
+							if(window.innerWidth < 500)
+								width = $(".ppt-content-area").width();
+							newContent = content.split("=")[0]+"=s"+width;	
+						}
+						break;
+					case 'name':
+						newContent = content.split(".pptx")[0];
+						break;
+					case 'update':
+						newContent = content.split("T")[0];
+						break;
+				}
+				return newContent;
+			},
+			renderCardList: function(){
+				this.$.repeat.items = this.fileInfoList.file;
+				this.$.repeat.render();
+			}
+		});
+	</script>
+</dom-module>

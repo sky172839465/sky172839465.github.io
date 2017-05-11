@@ -1,0 +1,157 @@
+<link rel="import" href="../../paper-button/paper-button.html">
+<link rel="import" href="../../paper-input/paper-input.html">
+<link rel="import" href="../../paper-spinner/paper-spinner.html">
+<link rel="import" href="../../google-signin/google-signin.html">
+<link rel="import" href="../../google-signin/google-signin-aware.html">
+<link rel="import" href="../googledrive-detail.html">
+<link rel="import" href="../googledrive-card.html">
+
+<dom-module id="googledrive-detail-demo">
+	<style is="custom-style">
+	#spinnerArea {
+		position: fixed;
+		z-index: 2;
+		height: 10vh;
+		width: 10vh;
+		overflow: show;
+		margin: auto;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		right: 0;		
+	}
+	paper-spinner {
+		height: 10vh;
+		width: 10vh;		
+	}
+	#fileArea {
+ 		margin: 0 auto;
+		width: 100%;
+	}
+	.google-signin-area {
+		margin: 5% auto;
+	}
+	a{
+		text-decoration: none; 
+		color: #000;		
+	}
+	</style>
+	<template>
+		<div id="spinnerArea">
+			<paper-spinner active="{{isLoading}}"></paper-spinner>
+		</div>
+		<div id="fileArea">
+			<div class="google-signin-area" align="center">
+				<google-signin client-id="881539947130-7t0poobhr2qi0hjuo4ciko317plpj7t7.apps.googleusercontent.com"
+							   height="tall"
+							   width="wide">
+				</google-signin>				
+			</div>
+
+			<google-signin-aware signed-in="{{isSignin}}"
+							   	 is-authorized="{{isAuthorized}}"
+							   	 scopes="https://www.googleapis.com/auth/drive"
+							   	 on-google-signin-aware-success="signSuccess">
+			</google-signin-aware>
+
+			<template is="dom-if" if="{{isSignin}}">
+				
+				<paper-input label="Google drive folder ID" value="{{inputValue}}"></paper-input>
+				<br>
+				<div align="center">
+					<paper-button raised on-click="_showFile">Show folder file</paper-button>
+					<a href="{{googleDriveUrl}}{{inputValue}}" target="block" tabindex="-1">
+						<paper-button raised>See in google drive</paper-button>
+					</a>
+				</div>
+				<paper-input label="Another simple google drive folder ID" 
+							 value="0B4Ljod2L6AiYfjMxRGpzV1VIcVhzN1lMczNEYjZzdXh4ZXFYNVhQV0Y1WTNBc1dBbEN2alk">
+				</paper-input>
+				<br>
+
+				<googledrive-detail api-key="{{apiKey}}"
+									author="{{author}}"
+									folder-id="{{folderId}}"
+									file-info-list="{{fileInfoList}}"
+									is-file-exist="{{isFileExist}}"
+									is-loading="{{isLoading}}"></googledrive-detail>
+			</template>
+			<!-- design layout -->
+			<googledrive-card id="googleDriveCard" file-info-list="{{fileInfoList}}"></googledrive-card>
+		</div>			
+	</template>
+	<script>
+		var googleDriveCard = null;
+		Polymer({
+			is: 'googledrive-detail-demo',
+			properties: {
+				author: {
+					type: JSON,
+					notify: true
+				},
+				isSignin: {
+					type: Boolean,
+					notify: true
+				},
+				apiKey: {
+					type: String,
+					value: "AIzaSyA_fs3pu2LfY8Ys6U0G3PeQmk_vvm7VlWk"
+				},
+				folderId: {
+					type: String,
+					observer: '_fileIdChange',
+					notify: true
+				},
+				fileInfo: {
+					type: JSON,
+					notify: true					
+				},
+				fileInfoList: {
+					type: JSON,
+					notify: true					
+				},
+				isFileExist: {
+					type: Boolean,
+					observer: '_isFileExistChange',
+					notify: true
+				},
+				inputValue: {
+					type: String,
+					notify: true					
+				},
+				googleDriveUrl: {
+					type: String,
+					value: "https://drive.google.com/drive/folders/"
+				}
+			},
+			attached: function(){
+				var width = "700px"
+				if(window.innerWidth < 500)width="100%";
+				document.getElementById("fileArea").style.width = width;
+			},		
+			error: function(data){
+				console.log(data);
+			},
+			signSuccess: function(data){
+			    var user = gapi.auth2.getAuthInstance()['currentUser'].get();
+			    this.author = {"Authorization": user.Zi.token_type+" "+user.Zi.access_token};
+			    this.folderId = "0B4Ljod2L6AiYfkpoZFl2SnRmUmtOSzQ5OTZTRHgwZkVVank5Ulp3a1AzdFhGZHRjZFRJc0E";
+			    this.inputValue = this.folderId;
+			},
+			_showFile: function(){
+				this.folderId = this.inputValue;
+			},
+			_fileIdChange: function(){
+				this.fileInfoList = {file: []};
+				this.isFileExist = false;
+			},
+			_isFileExistChange: function(value){
+				if(value){
+					var googleDriveCard = this.$.googleDriveCard;
+					googleDriveCard.fileInfoList = this.fileInfoList;
+					googleDriveCard.renderCardList();
+				}
+			}
+		});
+	</script>
+</dom-module>

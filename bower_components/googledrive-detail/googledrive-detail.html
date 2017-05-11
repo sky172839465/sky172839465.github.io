@@ -1,0 +1,151 @@
+<link rel="import" href="../iron-ajax/iron-ajax.html">
+<link rel="import" href="../paper-toast/paper-toast.html">
+
+<!--
+Implementation Google Drive [Folder](https://developers.google.com/drive/v2/reference/children/get#try-it), [File](https://developers.google.com/drive/v3/reference/files/get#try-it) API.
+
+Before start, should go to [Google API Developer](https://console.developers.google.com/) get a API key for these API used.
+
+#### Examples
+
+		<googledrive-detail api-key="{{apiKey}}"
+												folder-id="{{folderId}}"
+												file-info-list="{{fileInfoList}}"></googledrive-detail>	
+
+#### Notes
+
+The properties `fileInfoList` will get all files information from FolderId, but should wait for isFileExist to be true ! 
+
+Than you can use these data to design your Layout!
+
+Also can use [googledrive-card](#googledrive-card) to design your layout.
+
+@demo demo/index.html
+-->
+
+<dom-module id="googledrive-detail">
+	<template>
+		<iron-ajax auto url="{{_folderUrl(folderId)}}"
+						handle-as="json"
+						on-response="_isfileIdExist"
+						on-error="error"
+						headers="{{author}}">
+		</iron-ajax>	
+
+		<template is="dom-repeat" items="{{fileIdList.items}}" as="file">
+			<iron-ajax auto url="{{_fileUrl(file.id)}}"
+							handle-as="json"
+							on-response="_setFileInfo"
+							headers="{{author}}"
+							loading="{{isLoading}}">
+			</iron-ajax>				
+		</template>
+
+		<paper-toast id="toast" text="{{errorMsg}}"></paper-toast>
+	</template>
+	<script>
+		var existCount = 0;
+		Polymer({
+			is: 'googledrive-detail',
+			properties: {
+				// looking for ajax loading can use for load-spinner
+				isLoading: {
+					type: Boolean,
+					notify: true
+				},		
+				// google developer api key *must
+				apiKey: {
+					type: String,
+					notify: true
+				},
+				// token_type & access_token from google-signin *must
+				author: {
+					type: JSON,
+					notify: true
+				},					
+				// ID is in your google drive folder url *must
+				folderId: {
+					type: String,
+					notify: true
+				},						
+				// get folder all file ID from api
+				fileIdList: {
+					type: JSON,
+					notify: true					
+				},
+				// save all file data [url, img, modifyTime...etc], design layout by this properties
+				fileInfoList: {
+					type: JSON,
+					value: {file: []},
+					notify: true					
+				},
+				// when api get all data from api change value to status for template draw layout
+				isFileExist: {
+					type: Boolean,
+					value: false,
+					notify: true
+				},
+				// google drive file api field
+				fields: {
+					type: Array,
+					value: ["mimeType","name","webContentLink","webViewLink","thumbnailLink","modifiedTime","owners/displayName"],
+					notify: true
+				},
+				// error when google drive folder ID wrong
+				errorMsg: {
+					type: String,
+					notify: true					
+				},
+				// the file that you don't want to show (presentation, document, folder... [etc](https://developers.google.com/drive/v3/reference/files/get#try-it))
+				existFile: {
+					type: Array,
+					value: ["folder"],
+					notify: true
+				}
+			},
+			_folderUrl: function(folderId){
+			    return "https://www.googleapis.com/drive/v2/files/"+folderId+"/children/?fields=items/id&key="+this.apiKey;	
+			},
+			_fileUrl: function(fileID){
+				return "https://www.googleapis.com/drive/v3/files/"+fileID+"?fields="+this.fields+"&key="+this.apiKey;
+			},
+			_setFileInfo: function(fileInfo){
+				var info = fileInfo.detail.response;
+				var type = info.mimeType.split(".");
+				var isTargetExist = false;
+				for(var i in this.existFile){
+					if(type[type.length-1] == this.existFile[i]){
+						isTargetExist = true;
+						existCount++;
+						break;
+					}
+				}
+				if(!isTargetExist){
+					this.fileInfoList.file.push({
+						fileName: info.name,
+						fileDownload: info.webContentLink,
+						fileWebView: info.webViewLink,
+						fileImage: info.thumbnailLink,
+						fileModifiedTime: info.modifiedTime
+					});
+					if((this.fileInfoList.file.length+existCount) == this.fileIdList.items.length){
+						this.isFileExist = true;	
+					}	
+				}
+			},
+			_isfileIdExist: function(fileIdList){
+				if(fileIdList.detail.response.items.length == 0){
+					this.errorMsg = "google drive folder ID wrong or no file";
+					this.$.toast.open();
+				} else{
+					this.fileIdList = fileIdList.detail.response;
+				}
+			},
+			// return error message from google api
+			error: function(response){
+				this.errorMsg = response.detail.error;
+				this.$.toast.open();
+			}
+		});
+	</script>
+</dom-module>
