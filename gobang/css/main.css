@@ -45,9 +45,15 @@ html {
 
 .chessboard {
   margin: 0.4rem auto;
-  width: calc(100% - 2rem);
-  max-width: 1200px;
-  height: 990px; }
+  width: calc(100% - 2rem + 1px);
+  max-width: 1201px;
+  height: 991px;
+  padding-bottom: 30px;
+  background-color: #814b15; }
+  .chessboard__canvas {
+    position: absolute;
+    left: 60px;
+    top: calc(5rem + 60px); }
   .chessboard__row {
     display: flex;
     flex-direction: row;
@@ -57,23 +63,27 @@ html {
   .chessboard__column {
     width: 60px;
     height: 60px; }
+    .chessboard__column--canvas {
+      z-index: 1; }
+    .chessboard__column--victory {
+      z-index: 2; }
     .chessboard__column.selected {
       cursor: not-allowed; }
     .chessboard__column:hover:not(.selected) {
       outline: #008b8b solid 0.2rem;
       z-index: 1; }
+    .chessboard__column--div:hover:not(.selected):after {
+      bottom: 60px; }
     .chessboard__column:hover:not(.selected):after {
       content: ' ';
       width: 100%;
       height: 100%;
       display: block;
       position: relative;
-      bottom: 60px;
       background-color: rgba(0, 0, 0, 0.25); }
   .chessboard__grid {
     display: flex;
     flex-direction: row;
-    background-color: #814b15;
     height: calc(60px / 2); }
     .chessboard__grid .chessboard__block {
       width: calc(60px / 2);
@@ -89,12 +99,13 @@ html {
 
 .chessman {
   position: relative;
-  top: calc(60px / 4 * 3 * -1);
+  top: calc(60px / 4 * 1);
   left: calc(60px / 4 * 1);
   border-radius: 50%;
   box-shadow: 0 6px 20px 0px rgba(0, 0, 0, 0.4);
   z-index: 1; }
   .chessman__div {
+    top: calc(60px / 4 * 3 * -1);
     width: calc(60px / 2);
     height: calc(60px / 2); }
     .chessman__div--white {
@@ -102,18 +113,20 @@ html {
     .chessman__div--black {
       background-color: #000; }
   .chessman--victory {
-    z-index: 3; }
+    z-index: 2; }
   .chessman__overlay {
     position: relative;
-    bottom: 90px;
+    bottom: 30px;
     width: 60px;
     height: 60px;
     margin: 0 auto;
     border-radius: 50%; }
+    .chessman__overlay--div {
+      bottom: 90px; }
     .chessman__overlay--last {
       animation: notice 1.5s infinite; }
     .chessman__overlay--victory {
-      z-index: 2;
+      z-index: 1;
       animation: victory 1.5s infinite; }
 
 .gameover__overlay {
