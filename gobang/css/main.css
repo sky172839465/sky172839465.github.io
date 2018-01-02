@@ -44,6 +44,7 @@ html {
   cursor: pointer; }
 
 .chessboard {
+  position: relative;
   margin: 0.4rem auto;
   width: calc(100% - 2rem + 1px);
   max-width: 1201px;
@@ -51,9 +52,12 @@ html {
   padding-bottom: 30px;
   background-color: #814b15; }
   .chessboard__canvas {
+    margin: auto;
     position: absolute;
-    left: 60px;
-    top: calc(5rem + 60px); }
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0; }
   .chessboard__row {
     display: flex;
     flex-direction: row;
