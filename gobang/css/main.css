@@ -187,3 +187,11 @@ html {
     height: 30px;
     transform: translateY(15px);
     background-color: rgba(0, 190, 190, 0); } }
+
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+  .chessboard__canvas {
+    margin-top: 30px; }
+  .chessboard__block.chessboard__block--top-left, .chessboard__block.chessboard__block--bottom-right {
+    height: calc(60px / 2 + 1px); }
+  .chessboard__block.chessboard__block--bottom-left {
+    width: calc(60px / 2 + 1px); } }
