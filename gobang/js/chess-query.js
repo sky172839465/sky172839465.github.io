@@ -7,9 +7,7 @@
         getRangeChesses: getRangeChesses,
         getGroupChesses: getGroupChesses,
         getSortChesses: getSortChesses,
-        getCheckmateChesses: getCheckmateChesses,
-        getPosition: getPosition,
-        getDistance: getDistance
+        getConnectChesses: getConnectChesses
     };
 
     window.chessQuery = chessQuery;    
@@ -147,32 +145,32 @@
      * @param {any} expectDistance 預期兩手棋間的距離
      * @param {any} chessList 
      */
-    function getCheckmateChesses(VICTORY_CONDITION, expectDistance, chessList) {
+    function getConnectChesses(VICTORY_CONDITION, expectDistance, chessList) {
         var itemChess, prevPosition, nextPosition, actualDistance, i,
-            onlineChessList = [];
+            connectChessList = [];
 
         for (i = 0; i < chessList.length; i++) {
             itemChess = chessList[i];
-            if (onlineChessList.length === 0) {
-                onlineChessList.push(itemChess);
+            if (connectChessList.length === 0) {
+                connectChessList.push(itemChess);
             } else {
-                prevPosition = getPosition(onlineChessList[onlineChessList.length-1]);
+                prevPosition = getPosition(connectChessList[connectChessList.length-1]);
                 nextPosition = getPosition(itemChess);
                 // 前一個位置和目前位置的距離
                 actualDistance = getDistance(prevPosition, nextPosition);
                 // 和預期不一樣代表兩個棋子不是連在一起的
                 if (expectDistance !== actualDistance) {
-                onlineChessList.length = 0;
+                connectChessList.length = 0;
                 }
-                onlineChessList.push(itemChess);
+                connectChessList.push(itemChess);
             }
 
-            if (onlineChessList.length >= VICTORY_CONDITION) {
-                return onlineChessList;
+            if (connectChessList.length >= VICTORY_CONDITION) {
+                return connectChessList;
             }
         }
         
-        return onlineChessList;
+        return connectChessList;
     }
 
     /**
@@ -203,8 +201,8 @@
     function getDistance(a, b) {
         var distanceX, distanceY;
 
-        distanceX = (+a.asixX) - (+b.asixX);
-        distanceY = (+a.asixY) - (+b.asixY);
+        distanceX = a.asixX - b.asixX;
+        distanceY = a.asixY - b.asixY;
 
         return +Math.pow((distanceX * distanceX + distanceY * distanceY), 0.5).toFixed(3);
     }
@@ -233,8 +231,8 @@
      * @returns 
      */
     function isFromLeftTopToRightBottomChess(other, target) {
-        if ((+other.asixX < target.asixX && +other.asixY < target.asixY) ||
-            (+other.asixX > target.asixX && +other.asixY > target.asixY)) {
+        if (other.asixX < target.asixX && other.asixY < target.asixY ||
+            other.asixX > target.asixX && other.asixY > target.asixY) {
             return true;
         } else {
             return false;
@@ -249,8 +247,8 @@
      * @returns 
      */
     function isFromLeftBottomToRightTopChess(other, target) {
-        if((+other.asixX < target.asixX && +other.asixY > target.asixY) ||
-            (+other.asixX > target.asixX && +other.asixY < target.asixY)) {
+        if (other.asixX < target.asixX && other.asixY > target.asixY ||
+            other.asixX > target.asixX && other.asixY < target.asixY) {
             return true;
         } else {
             return false;
