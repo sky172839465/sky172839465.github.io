@@ -1,0 +1,1 @@
+{"version":3,"sources":["style.css"],"names":[],"mappings":"AAAA,iBAGE,SACA,SAAW","file":"static/css/main.1b852957.css","sourcesContent":["*,\n*:before,\n*:after {\n  margin: 0;\n  padding: 0;\n}\n\n\n// WEBPACK FOOTER //\n// ./src/style.css"],"sourceRoot":""}
