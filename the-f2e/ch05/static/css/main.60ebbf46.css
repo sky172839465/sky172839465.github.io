@@ -1,0 +1,2 @@
+*,:after,:before{margin:0;padding:0}.line-fade{position:relative}.line-fade:after{position:absolute;content:"";text-align:right;bottom:0;right:0;width:10%;height:1.2rem;background:-webkit-gradient(linear,left top,right top,from(hsla(0,0%,100%,0)),to(#fff));background:-webkit-linear-gradient(left,hsla(0,0%,100%,0),#fff);background:-o-linear-gradient(left,hsla(0,0%,100%,0),#fff);background:linear-gradient(90deg,hsla(0,0%,100%,0),#fff)}
+/*# sourceMappingURL=main.60ebbf46.css.map*/
