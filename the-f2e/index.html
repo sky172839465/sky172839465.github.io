@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="theme-color" content="#000000">
+  <!--
+    manifest.json provides metadata used when your web app is added to the
+    homescreen on Android. See https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
+  -->
+  <link rel="shortcut icon" href="./assets/favicon.ico">
+  <meta name=description content="Records 9 weeks THE F2E">
+  <meta name=author content="Yusong Hsu">
+  <meta property="article:publisher" content="https://www.facebook.com/sky172839465/" />
+  <meta property="article:author" content="https://www.facebook.com/sky172839465/" />
+  <meta property=og:title content="The F2E Demo">
+  <meta property=og:type content="article">
+  <meta property=og:url content="https://sky172839465.github.io/the-f2e">
+  <meta property=og:image content="https://sky172839465.github.io/the-f2e/img/home.png">
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="300" />
+  <meta property="og:image:height" content="300" />    
+  <meta property=og:description content="Records 9 weeks THE F2E">
+  <meta property=og:site_name content="The F2E Demo">
+  <link rel="apple-touch-icon" sizes="180x180" href="./assets/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon-16x16.png">
+  <title>THE F2E Demo</title>
+  <style>
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      line-height: 4rem;
+      background: #000;
+      color: #eee;
+      padding-left: 2rem;
+    }
+    .container {
+      width: 80%;
+      margin: 0 auto;
+    }
+    .item {
+      padding: 0.6rem;
+    }
+    .link {
+      text-decoration: none;
+    }
+    .button {
+      display: inline-block;
+      width: 100%;
+      line-height: 3rem;
+      color: #eee;
+      background: linear-gradient(to right, #00008bbd, #0000ff9e, #00008bbd);
+      text-align: center;
+      cursor: pointer;
+      transition: all .2s ease-in;
+      border-radius: .5rem;
+    }
+    .button:hover {
+      transform: scale(1.05);
+      font-size: 110%;
+    }
+  </style>
+</head>
+<body>
+  <header>THE F2E HOME</header>
+  <div class="container"></div>
+  <script>
+    const themeList = [
+      { title: 'Todo List' },
+      { title: 'Filter' },
+      { title: 'Admin Order' },
+      { title: 'Product Gallery' },
+      { title: 'Comic Viewer' },
+      { title: 'Validation' },
+      { title: 'Canvas Game' },
+      { title: 'Parallax Scrolling' },
+      { title: 'Skill Tree' },
+    ]
+    const container = document.querySelector('.container')
+    themeList.forEach(({ title }, index) => {
+      const item = document.createElement('div')
+      item.classList.add('item')
+      const itemLink = document.createElement('a')
+      const link = `https://sky172839465.github.io/the-f2e/ch0${index + 1}`
+      itemLink.classList.add('link')
+      itemLink.target = '_blank'
+      itemLink.href = link
+      const itemLinkTitle = document.createElement('span')
+      itemLinkTitle.classList.add('button')
+      itemLinkTitle.textContent = title
+
+      itemLink.appendChild(itemLinkTitle)
+      item.appendChild(itemLink)
+      container.appendChild(item)
+    })
+  </script>
+</body>
+</html>
